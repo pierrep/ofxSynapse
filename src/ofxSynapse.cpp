@@ -1,4 +1,4 @@
-#include "ofxSynapse.h""
+#include "ofxSynapse.h"
 #include "JointHitDetector.h"
 
 
