@@ -53,6 +53,7 @@ ofVec3f ActiveSkeleton::GetProjectivePos(XnSkeletonJoint joint) const
    //worldToProjective(pos[0],*mDepthGenerator);
    mDepthGenerator->ConvertRealWorldToProjective(1,pos,pos);
 
-   vPos.x = pos[0].X; vPos.y = pos[0].Y; vPos.z = pos[0].Z;
+   vPos.x = pos[0].X / ofGetWidth() * 1920.0f; vPos.y = pos[0].Y / ofGetHeight() * 1080.0f; vPos.z = pos[0].Z;
+
    return vPos;
 }

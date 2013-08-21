@@ -154,13 +154,11 @@ void ofxSynapse::setupJoints()
         mHitDetector.push_back(new JointHitDetector(XN_SKEL_LEFT_SHOULDER, XN_SKEL_TORSO, jointName, JointHitDetector::SEND_SCREEN_POS));
 
         jointName = settings.getValue("RIGHT_HIP");
-        mHitDetector.push_back(new JointHitDetector(XN_SKEL_RIGHT_SHOULDER, XN_SKEL_TORSO, jointName, JointHitDetector::SEND_SCREEN_POS));
+        mHitDetector.push_back(new JointHitDetector(XN_SKEL_RIGHT_HIP, XN_SKEL_TORSO, jointName, JointHitDetector::SEND_SCREEN_POS));
 
         jointName = settings.getValue("LEFT_HIP");
-        mHitDetector.push_back(new JointHitDetector(XN_SKEL_LEFT_SHOULDER, XN_SKEL_TORSO, jointName, JointHitDetector::SEND_SCREEN_POS));
+        mHitDetector.push_back(new JointHitDetector(XN_SKEL_LEFT_HIP, XN_SKEL_TORSO, jointName, JointHitDetector::SEND_SCREEN_POS));
 
-        jointName = settings.getValue("LEFT_HIP");
-        mHitDetector.push_back(new JointHitDetector(XN_SKEL_LEFT_SHOULDER, XN_SKEL_TORSO, jointName, JointHitDetector::SEND_SCREEN_POS));
 
 //        mClosestHand = new JointHitDetector(XN_SKEL_RIGHT_HAND, XN_SKEL_TORSO, "/closesthand",JointHitDetector::SEND_SCREEN_POS));
 //        mHitDetector.push_back(mClosestHand);
