@@ -13,7 +13,7 @@
 #include "ofxOsc.h"
 
 #define HOST "localhost"
-#define SEND_PORT 12345
+#define SEND_PORT 7110
 #define SEND_PORT2 12347
 #define RECEIVE_PORT 12346
 #define USE_TWO_OSC_PORTS   0  //make 1 to enable two ports
