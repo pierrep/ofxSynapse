@@ -29,6 +29,7 @@ void ofxSynapse::setup() {
     mActiveSkeleton.SetUserGenerator(&(openNIDevice.getUserGenerator()));
     mActiveSkeleton.SetDepthGenerator(&(openNIDevice.getDepthGenerator()));
 
+    outputScreen.set(1920,1080);
     setupJoints();
 
 }
@@ -69,6 +70,7 @@ void ofxSynapse::update() {
 		for (int i=0; i<mHitDetector.size(); ++i)
 		{
 			mHitDetector[i]->Poll(dt);
+			mHitDetector[i]->UpdateOffset(offset);
 		}
 
       if (!sTracking)
@@ -104,6 +106,10 @@ void ofxSynapse::draw()
         }
 	glPopMatrix();
 	ofPopStyle();
+}
+
+void ofxSynapse::setOffset(ofVec2f _offset) {
+    offset.set(_offset);
 }
 
 void ofxSynapse::setupJoints()
@@ -160,6 +166,10 @@ void ofxSynapse::setupJoints()
         mHitDetector.push_back(new JointHitDetector(XN_SKEL_LEFT_HIP, XN_SKEL_TORSO, jointName, JointHitDetector::SEND_SCREEN_POS));
 
 
+		for (int i=0; i<mHitDetector.size(); ++i)
+		{
+			mHitDetector[i]->UpdateOutputScreen(outputScreen);
+		}
 //        mClosestHand = new JointHitDetector(XN_SKEL_RIGHT_HAND, XN_SKEL_TORSO, "/closesthand",JointHitDetector::SEND_SCREEN_POS));
 //        mHitDetector.push_back(mClosestHand);
     }

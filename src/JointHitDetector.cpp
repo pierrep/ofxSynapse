@@ -35,11 +35,27 @@ JointHitDetector::JointHitDetector(XnSkeletonJoint joint, XnSkeletonJoint refJoi
     TheMessenger->AddListener(this, mName+"_gettuninginfo");
 
     BroadcastTuningInfo();
+
+    outputScreen.x = ofGetWidth();
+    outputScreen.y = ofGetHeight();
+    offset.set(0,0);
 }
 
 JointHitDetector::~JointHitDetector()
 {
     TheMessenger->RemoveListener(this);
+}
+
+void JointHitDetector::UpdateOutputScreen(ofVec2f _screen)
+{
+
+    outputScreen.set(_screen.x,_screen.y);
+}
+
+void JointHitDetector::UpdateOffset(ofVec2f _offset)
+{
+    offset.set(_offset);
+
 }
 
 void JointHitDetector::Poll(float dt)
@@ -69,6 +85,9 @@ void JointHitDetector::Poll(float dt)
       //if (mMessageScreenJointPos > 0)
       {
          ofVec3f vScreen = TheActiveSkeleton->GetProjectivePos(mJoint);
+         vScreen.x = (vScreen.x / (float)ofGetWidth()) * outputScreen.x + offset.x;
+         vScreen.y = (vScreen.y / (float)ofGetHeight()) * outputScreen.y + offset.y;
+         //cout << vScreen.x << " " << vScreen.y <<  "  outputScreen.y=" << outputScreen.y << endl;
          TheMessenger->Send2DVectorMessage("/joint",mName, vScreen);
       }
 

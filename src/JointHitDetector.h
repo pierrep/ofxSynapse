@@ -33,6 +33,8 @@ public:
     void SetJoint(XnSkeletonJoint joint);
     void SetMessageMode(MessageMode mode);
     void OnMessage(const ofxOscMessage& msg);
+    void UpdateOffset(ofVec2f _offset);
+    void UpdateOutputScreen(ofVec2f _screen);
 
 private:
     enum HitDirection
@@ -63,5 +65,10 @@ private:
     float mMessageWorldJointPos;
     float mMessageBodyJointPos;
     float mMessageScreenJointPos;
+
+    ofVec2f offset;
+    ofVec2f outputScreen;
+
+
 };
 

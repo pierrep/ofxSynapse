@@ -14,7 +14,7 @@ public:
     void update();
     void draw();
     void setupJoints();
-
+    void setOffset(ofVec2f _offset);
 
     ofxOpenNI openNIDevice;
 
@@ -23,6 +23,7 @@ public:
     JointHitDetector* mClosestHand;
     ActiveSkeleton mActiveSkeleton;
     ofXml   settings;
-
+    ofVec2f outputScreen;
+    ofVec2f offset;
 
 };
