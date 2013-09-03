@@ -13,8 +13,10 @@ public:
     void setup();
     void update();
     void draw();
+    void keyPressed(  ofKeyEventArgs& eventArg );
     void setupJoints();
     void setOffset(ofVec2f _offset);
+    void stop();
 
     ofxOpenNI openNIDevice;
 
@@ -25,5 +27,8 @@ public:
     ofXml   settings;
     ofVec2f outputScreen;
     ofVec2f offset;
+
+private:
+    bool bStopped;
 
 };

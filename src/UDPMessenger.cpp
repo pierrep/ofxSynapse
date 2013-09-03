@@ -129,8 +129,8 @@ void UDPMessenger::Send2DVectorMessage(string label, string name, ofVec2f val)
    ofxOscMessage msg;
    msg.setAddress(label);
    msg.addStringArg(name);
-   msg.addFloatArg((float)(val.x + 1500.0f));
-   msg.addFloatArg((float)(val.y + 1500.0f));
+   msg.addFloatArg((float)(val.x*1.5f + 1200.0f));
+   msg.addFloatArg((float)(val.y*1.5f + 1200.0f));
 //   msg.addFloatArg(val.x);
 //   msg.addFloatArg(val.y);
    mSender.sendMessage(msg);
@@ -138,3 +138,20 @@ void UDPMessenger::Send2DVectorMessage(string label, string name, ofVec2f val)
         mSender2.sendMessage(msg);
    }
 }
+
+void UDPMessenger::SendBooleanMessage(string label, string name, bool trigger)
+{
+    ofxOscMessage msg;
+    msg.setAddress(label);
+    msg.addStringArg(name);
+
+    int iTrigger;
+    trigger?iTrigger=1 : iTrigger=0;
+
+    msg.addIntArg(iTrigger);
+    mSender.sendMessage(msg);
+   if(USE_TWO_OSC_PORTS) {
+        mSender2.sendMessage(msg);
+   }
+}
+

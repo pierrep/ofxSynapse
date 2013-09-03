@@ -4,11 +4,18 @@
 
 ofxSynapse::~ofxSynapse()
 {
-   openNIDevice.stop();
+    if(!bStopped) {
+        openNIDevice.stop();
+    }
 
-   for (unsigned int i=0; i<mHitDetector.size(); ++i) {
-      delete mHitDetector[i];
-   }
+    for (unsigned int i=0; i<mHitDetector.size(); ++i) {
+        delete mHitDetector[i];
+    }
+}
+
+void ofxSynapse::stop() {
+    openNIDevice.stop();
+    bStopped = true;
 }
 
 void ofxSynapse::setup() {
@@ -25,12 +32,15 @@ void ofxSynapse::setup() {
     //openNIDevice.setMaxNumUsers(1);
 
     openNIDevice.start();
+    bStopped = false;
 
     mActiveSkeleton.SetUserGenerator(&(openNIDevice.getUserGenerator()));
     mActiveSkeleton.SetDepthGenerator(&(openNIDevice.getDepthGenerator()));
 
     outputScreen.set(1920,1080);
     setupJoints();
+
+    ofAddListener(ofEvents().keyPressed, this, &ofxSynapse::keyPressed);
 
 }
 
@@ -100,9 +110,10 @@ void ofxSynapse::draw()
 	glPushMatrix();
         openNIDevice.drawDepth();
         openNIDevice.drawSkeletons();
-
-        for (int i=0; i<mHitDetector.size(); ++i) {
-            mHitDetector[i]->Draw();
+        if(mActiveSkeleton.IsTracked()) {
+            for (int i=0; i<mHitDetector.size(); ++i) {
+                mHitDetector[i]->Draw();
+            }
         }
 	glPopMatrix();
 	ofPopStyle();
@@ -111,6 +122,26 @@ void ofxSynapse::draw()
 void ofxSynapse::setOffset(ofVec2f _offset) {
     offset.set(_offset);
 }
+
+void ofxSynapse::keyPressed( ofKeyEventArgs& eventArgs)
+{
+    int key = eventArgs.key;
+
+    if(key == '1') {
+        TheMessenger->SendBooleanMessage("/layervis","catwoman",0);
+    }
+    if(key == '2') {
+        TheMessenger->SendBooleanMessage("/layervis","catwoman",1);
+    }
+    if(key == '3') {
+        TheMessenger->SendBooleanMessage("/layervis","Mike Master",0);
+    }
+    if(key == '4') {
+        TheMessenger->SendBooleanMessage("/layervis","Mike Master",1);
+    }
+}
+
+
 
 void ofxSynapse::setupJoints()
 {

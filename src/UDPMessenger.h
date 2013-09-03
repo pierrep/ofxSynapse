@@ -44,6 +44,7 @@ public:
     void SendStringMessage(string label, string val);
     void Send3DVectorMessage(string label, string name, ofVec3f val);
     void Send2DVectorMessage(string label, string name, ofVec2f val);
+    void SendBooleanMessage(string label, string name, bool trigger);
 
     void AddListener(IMessageReceiver* receiver, string label);
     void RemoveListener(IMessageReceiver* receiver);
