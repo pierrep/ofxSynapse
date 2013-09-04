@@ -50,12 +50,18 @@ public:
     void RemoveListener(IMessageReceiver* receiver);
     void RemoveListener(IMessageReceiver* receiver, string label);
 
+    void SetAnimataOffsets(float xoffset, float yoffset, float scale);
+
 private:
     ofxOscSender mSender;
     ofxOscSender mSender2;
     ofxOscReceiver mReceiver;
 
     std::list<Listener> mListeners;
+
+    float xoffset;
+    float yoffset;
+    float scale;
 };
 
 extern UDPMessenger* TheMessenger;

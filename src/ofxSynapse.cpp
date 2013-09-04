@@ -203,5 +203,10 @@ void ofxSynapse::setupJoints()
 		}
 //        mClosestHand = new JointHitDetector(XN_SKEL_RIGHT_HAND, XN_SKEL_TORSO, "/closesthand",JointHitDetector::SEND_SCREEN_POS));
 //        mHitDetector.push_back(mClosestHand);
+
+        settings.setToParent();
+        settings.setTo("CALIBRATE");
+        cout << "XOFFSET=" << settings.getFloatValue("XOFFSET") << " YOFFSET=" << settings.getFloatValue("YOFFSET") << " SCALE=" << settings.getFloatValue("SCALE") << endl;
+        mMessenger.SetAnimataOffsets(settings.getFloatValue("XOFFSET"), settings.getFloatValue("YOFFSET"), settings.getFloatValue("SCALE"));
     }
 }
