@@ -29,7 +29,7 @@ void ofxSynapse::setup() {
 
     openNIDevice.setRegister(true);
     openNIDevice.setMirror(true);
-    //openNIDevice.setMaxNumUsers(1);
+    openNIDevice.setMaxNumUsers(1);
 
     openNIDevice.start();
     bStopped = false;
@@ -115,6 +115,10 @@ void ofxSynapse::draw()
                 mHitDetector[i]->Draw();
             }
         }
+        ofPushStyle();
+        ofSetColor(0,255,0);
+        ofDrawBitmapString("NUM TRACKED USERS:"+ofToString(openNIDevice.getNumTrackedUsers()),20,ofGetHeight()-40);
+        ofPopStyle();
 	glPopMatrix();
 	ofPopStyle();
 }

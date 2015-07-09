@@ -17,7 +17,7 @@ UDPMessenger::UDPMessenger()
    TheMessenger = this;
 
    // open an outgoing connection to HOST:SEND_PORT
-	mSender.setup( HOST, SEND_PORT );
+   mSender.setup( HOST, SEND_PORT );
    mSender2.setup( HOST, SEND_PORT2 );
 
    // open connection listening to RECEIVE_PORT
