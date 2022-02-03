@@ -1,0 +1,5 @@
+ofxPoco
+ofxOpenNI
+ofxOsc
+ofxSynapse
+ofxXmlSettings

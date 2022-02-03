@@ -4,18 +4,9 @@
 
 ofxSynapse::~ofxSynapse()
 {
-    if(!bStopped) {
-        openNIDevice.stop();
-    }
-
     for (unsigned int i=0; i<mHitDetector.size(); ++i) {
         delete mHitDetector[i];
     }
-}
-
-void ofxSynapse::stop() {
-    openNIDevice.stop();
-    bStopped = true;
 }
 
 void ofxSynapse::setup() {
@@ -32,7 +23,6 @@ void ofxSynapse::setup() {
     //openNIDevice.setMaxNumUsers(1);
 
     openNIDevice.start();
-    bStopped = false;
 
     mActiveSkeleton.SetUserGenerator(&(openNIDevice.getUserGenerator()));
     mActiveSkeleton.SetDepthGenerator(&(openNIDevice.getDepthGenerator()));
@@ -67,15 +57,17 @@ void ofxSynapse::update() {
 
 	mActiveSkeleton.SetActiveUser(pTracked);
 
-   bool sTracking = false;
    if (mActiveSkeleton.IsTracked())
 	{
 		float dummy;
-		if (TheActiveSkeleton->GetRealWorldPos(XN_SKEL_RIGHT_HAND, dummy).z <
-			TheActiveSkeleton->GetRealWorldPos(XN_SKEL_LEFT_HAND, dummy).z)
-			if(mClosestHand != NULL) mClosestHand->SetJoint(XN_SKEL_RIGHT_HAND);
-		else
-			if(mClosestHand != NULL) mClosestHand->SetJoint(XN_SKEL_LEFT_HAND);
+        if (TheActiveSkeleton->GetRealWorldPos(XN_SKEL_RIGHT_HAND, dummy).z < TheActiveSkeleton->GetRealWorldPos(XN_SKEL_LEFT_HAND, dummy).z) {
+            if(mClosestHand != NULL) {
+                mClosestHand->SetJoint(XN_SKEL_RIGHT_HAND);
+            }
+            else {
+                if(mClosestHand != NULL) mClosestHand->SetJoint(XN_SKEL_LEFT_HAND);
+            }
+        }
 
 		for (int i=0; i<mHitDetector.size(); ++i)
 		{
@@ -88,7 +80,7 @@ void ofxSynapse::update() {
          sTracking = true;
          TheMessenger->SendIntMessage("/tracking_skeleton", 1);
       }
-	}
+    }
    else
    {
       if (sTracking)
@@ -206,7 +198,8 @@ void ofxSynapse::setupJoints()
 
         settings.setToParent();
         settings.setTo("CALIBRATE");
+
         cout << "XOFFSET=" << settings.getFloatValue("XOFFSET") << " YOFFSET=" << settings.getFloatValue("YOFFSET") << " SCALE=" << settings.getFloatValue("SCALE") << endl;
-        mMessenger.SetAnimataOffsets(settings.getFloatValue("XOFFSET"), settings.getFloatValue("YOFFSET"), settings.getFloatValue("SCALE"));
+        //mMessenger.SetAnimataOffsets(settings.getFloatValue("XOFFSET"), settings.getFloatValue("YOFFSET"), settings.getFloatValue("SCALE"));
     }
 }

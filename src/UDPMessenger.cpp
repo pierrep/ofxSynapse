@@ -36,7 +36,7 @@ void UDPMessenger::Poll()
    {
       // get the next message
 		ofxOscMessage msg;
-		mReceiver.getNextMessage( &msg );
+        mReceiver.getNextMessage( msg );
 
       string label = msg.getAddress();
 

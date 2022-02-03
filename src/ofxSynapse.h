@@ -2,6 +2,7 @@
 
 #include "UDPMessenger.h"
 #include "ActiveSkeleton.h"
+#include "ofxXmlPoco.h"
 
 class JointHitDetector;
 
@@ -16,7 +17,6 @@ public:
     void keyPressed(  ofKeyEventArgs& eventArg );
     void setupJoints();
     void setOffset(ofVec2f _offset);
-    void stop();
 
     ofxOpenNI openNIDevice;
 
@@ -24,11 +24,11 @@ public:
     std::vector<JointHitDetector*> mHitDetector;
     JointHitDetector* mClosestHand;
     ActiveSkeleton mActiveSkeleton;
-    ofXml   settings;
+    ofxXmlPoco   settings;
     ofVec2f outputScreen;
     ofVec2f offset;
 
 private:
-    bool bStopped;
+    bool sTracking = false;
 
 };

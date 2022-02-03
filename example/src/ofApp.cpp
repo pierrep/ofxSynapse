@@ -1,18 +1,18 @@
+
 #include "ofApp.h"
 
 //--------------------------------------------------------------
 void ofApp::setup()
 {
-
 	ofBackground(0, 0, 0);
-    ofSetLogLevel(OF_LOG_VERBOSE);
+    ofSetLogLevel(OF_LOG_NOTICE);
 
     synapse.setup();
 }
 
+//--------------------------------------------------------------
 void ofApp::exit()
 {
-    cout << "Exit from app!" << endl;
 
 }
 
@@ -28,8 +28,6 @@ void ofApp::draw()
 {
     synapse.draw();
 }
-
-
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key)
