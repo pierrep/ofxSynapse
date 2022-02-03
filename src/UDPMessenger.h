@@ -12,7 +12,7 @@
 #include "ofMain.h"
 #include "ofxOsc.h"
 
-#define HOST "localhost"
+#define HOST "192.168.1.32"
 #define SEND_PORT 7110
 #define SEND_PORT2 12347
 #define RECEIVE_PORT 12346
