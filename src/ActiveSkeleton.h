@@ -24,6 +24,8 @@ public:
    void SetUserGenerator(xn::UserGenerator* pUserGenerator) { mUserGenerator = pUserGenerator; }
    void SetDepthGenerator(xn::DepthGenerator* pDepthGenerator) { mDepthGenerator = pDepthGenerator; }
    void SetActiveUser(ofxOpenNIUser* pUser) { mUser = pUser; }
+   xn::UserGenerator* GetUserGenerator() {return mUserGenerator;}
+   ofxOpenNIUser* GetActiveUser() {return mUser;}
 
    ofVec3f GetRealWorldPos(XnSkeletonJoint joint, float& confidence) const;
    ofVec3f GetProjectivePos(XnSkeletonJoint joint) const;

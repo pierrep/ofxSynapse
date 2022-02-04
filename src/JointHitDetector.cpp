@@ -224,8 +224,9 @@ void JointHitDetector::Draw() const
 		glPopMatrix();
    }
 
-   for (int i=0; i<kNumHitDirections; ++i)
+   for (int i=0; i<kNumHitDirections; ++i) {
       DrawHitDirection((HitDirection)i);
+   }
 }
 
 void JointHitDetector::DrawHitDirection(HitDirection hitDirection) const

@@ -14,8 +14,7 @@ public:
     void setup();
     void update();
     void draw();
-    void keyPressed(  ofKeyEventArgs& eventArg );
-    void setupJoints();
+    void keyPressed(  ofKeyEventArgs& eventArg );    
     void setOffset(ofVec2f _offset);
 
     ofxOpenNI openNIDevice;
@@ -28,7 +27,8 @@ public:
     ofVec2f outputScreen;
     ofVec2f offset;
 
-private:
+protected:
+    void setupJointNames();
     bool sTracking = false;
 
 };

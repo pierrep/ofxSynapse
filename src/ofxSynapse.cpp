@@ -10,9 +10,6 @@ ofxSynapse::~ofxSynapse()
 }
 
 void ofxSynapse::setup() {
-
-    //ofSystem("killall XnSensorServer");
-
     openNIDevice.setup();
     openNIDevice.addImageGenerator();
     openNIDevice.addDepthGenerator();
@@ -28,10 +25,9 @@ void ofxSynapse::setup() {
     mActiveSkeleton.SetDepthGenerator(&(openNIDevice.getDepthGenerator()));
 
     outputScreen.set(1920,1080);
-    setupJoints();
+    setupJointNames();
 
     ofAddListener(ofEvents().keyPressed, this, &ofxSynapse::keyPressed);
-
 }
 
 
@@ -89,8 +85,6 @@ void ofxSynapse::update() {
          TheMessenger->SendIntMessage("/tracking_skeleton", 0);
       }
    }
-
-
 }
 
 
@@ -103,13 +97,17 @@ void ofxSynapse::draw()
         openNIDevice.drawDepth();
         openNIDevice.drawSkeletons();
         if(mActiveSkeleton.IsTracked()) {
-            for (int i=0; i<mHitDetector.size(); ++i) {
-                mHitDetector[i]->Draw();
+            if(mActiveSkeleton.GetActiveUser()->getCenter() != ofVec3f(0,0,0)) {
+                for (int i=0; i< mHitDetector.size(); ++i) {
+                    mHitDetector[i]->Draw();
+                }
             }
         }
         ofPushStyle();
         ofSetColor(0,255,0);
         ofDrawBitmapString("NUM TRACKED USERS:"+ofToString(openNIDevice.getNumTrackedUsers()),20,ofGetHeight()-40);
+        if(mActiveSkeleton.GetActiveUser() != nullptr)
+            ofDrawBitmapString("CENTRE:"+ofToString(mActiveSkeleton.GetActiveUser()->getCenter()),20,ofGetHeight()-20);
         ofPopStyle();
 	glPopMatrix();
 	ofPopStyle();
@@ -123,27 +121,15 @@ void ofxSynapse::keyPressed( ofKeyEventArgs& eventArgs)
 {
     int key = eventArgs.key;
 
-    if(key == '1') {
-        TheMessenger->SendBooleanMessage("/layervis","catwoman",0);
-    }
-    if(key == '2') {
-        TheMessenger->SendBooleanMessage("/layervis","catwoman",1);
-    }
-    if(key == '3') {
-        TheMessenger->SendBooleanMessage("/layervis","Mike Master",0);
-    }
-    if(key == '4') {
-        TheMessenger->SendBooleanMessage("/layervis","Mike Master",1);
-    }
 }
 
 
 
-void ofxSynapse::setupJoints()
+void ofxSynapse::setupJointNames()
 {
+    string settingsdir = ofToDataPath("SynapseSettings.xml",true);
     bool bLoaded = settings.load("SynapseSettings.xml");
-    if(bLoaded) {
-        cout << "load settings" << endl;
+    if(bLoaded) {        
         string jointName;
         settings.setTo("SKELETON");
 
@@ -200,10 +186,6 @@ void ofxSynapse::setupJoints()
 //        mClosestHand = new JointHitDetector(XN_SKEL_RIGHT_HAND, XN_SKEL_TORSO, "/closesthand",JointHitDetector::SEND_SCREEN_POS));
 //        mHitDetector.push_back(mClosestHand);
 
-        settings.setToParent();
-        settings.setTo("CALIBRATE");
-
-        cout << "XOFFSET=" << settings.getFloatValue("XOFFSET") << " YOFFSET=" << settings.getFloatValue("YOFFSET") << " SCALE=" << settings.getFloatValue("SCALE") << endl;
-        //mMessenger.SetAnimataOffsets(settings.getFloatValue("XOFFSET"), settings.getFloatValue("YOFFSET"), settings.getFloatValue("SCALE"));
+        ofLogNotice() << "loaded joint name settings";
     }
 }
